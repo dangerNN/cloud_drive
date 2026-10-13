@@ -3,7 +3,6 @@ import { formatBytes } from '../../utils/formatters';
 export default function FilesTab({ files, setFiles, toggleSaveFile, onOpenUploadModal, t }) {
   
   const handleDownload = (file) => {
-    // Генерируем временную ссылку для скачивания сырого файла
     const downloadUrl = file.fileBlob ? URL.createObjectURL(file.fileBlob) : null;
     
     if (!downloadUrl) {

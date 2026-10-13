@@ -16,7 +16,6 @@ import SettingsTab from './components/Tabs/SettingsTab';
 import UploadModal from './components/Modals/UploadModal';
 import TokenModal from './components/Modals/TokenModal';
 
-// Импортируем нашу базу данных
 import { saveToDB, getFromDB } from './utils/db';
 
 function MainDashboard({ user, onLogout }) {
@@ -34,14 +33,13 @@ function MainDashboard({ user, onLogout }) {
   // Состояния для файлов и фото
   const [files, setFiles] = useState([]);
   const [photos, setPhotos] = useState([]);
-  const [isDBLoaded, setIsDBLoaded] = useState(false); // Флаг окончания загрузки базы данных
+  const [isDBLoaded, setIsDBLoaded] = useState(false);
 
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem('nexus_messages');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Загрузка тяжелых данных из IndexedDB при старте
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -65,7 +63,6 @@ function MainDashboard({ user, onLogout }) {
     loadData();
   }, []);
 
-  // Сохранение в IndexedDB при любых изменениях (если база уже загружена)
   useEffect(() => {
     if (isDBLoaded) saveToDB('nexus_files', files);
   }, [files, isDBLoaded]);
@@ -74,7 +71,6 @@ function MainDashboard({ user, onLogout }) {
     if (isDBLoaded) saveToDB('nexus_photos', photos);
   }, [photos, isDBLoaded]);
 
-  // Сохранение настроек в обычный localStorage
   useEffect(() => localStorage.setItem('nexus_messages', JSON.stringify(messages)), [messages]);
   useEffect(() => localStorage.setItem('nexus_lang', lang), [lang]);
   useEffect(() => localStorage.setItem('nexus_accent', accentColor), [accentColor]);
@@ -86,13 +82,12 @@ function MainDashboard({ user, onLogout }) {
   const toggleSaveFile = (id) => setFiles(files.map(f => f.id === id ? { ...f, isSaved: !f.isSaved } : f));
   const toggleSavePhoto = (id) => setPhotos(photos.map(p => p.id === id ? { ...p, isSaved: !p.isSaved } : p));
 
-  // Моментальная загрузка файла (Без зависаний Base64)
   const handleFileUpload = (fileObj) => {
     const newFile = {
       id: Date.now(),
       name: fileObj.name,
       rawSize: fileObj.size,
-      fileBlob: fileObj, // Сохраняем сырой файл
+      fileBlob: fileObj,
       date: 'Только что',
       daysLeft: 7,
       isSaved: false
@@ -127,7 +122,7 @@ function MainDashboard({ user, onLogout }) {
         <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} t={t} user={user} onLogout={onLogout} />
         {activeTab === 'files' && <FilesTab files={filteredFiles} setFiles={setFiles} toggleSaveFile={toggleSaveFile} onOpenUploadModal={() => setUploadModalConfig({ type: 'file' })} t={t} />}
         {activeTab === 'photos' && <PhotosTab photos={filteredPhotos} setPhotos={setPhotos} toggleSavePhoto={toggleSavePhoto} onOpenPhotoUploadModal={() => setUploadModalConfig({ type: 'photo' })} t={t} />}
-        {activeTab === 'saved' && <SavedTab savedFiles={savedFiles} savedPhotos={savedPhotos} toggleSaveFile={toggleSaveFile} toggleSavePhoto={toggleSavePhoto} t={t} />}
+        {activeTab === 'saved' && <SavedTab savedFiles={savedFiles} savedPhotos={savedPhotos} toggleSaveFile={toggleSaveFile} toggleSavePhoto={toggleSavePhoto} setFiles={setFiles} setPhotos={setPhotos} t={t} />}
         {activeTab === 'messages' && <NotesTab messages={messages} setMessages={setMessages} t={t} />}
         {activeTab === 'vault' && <VaultTab isVaultUnlocked={isVaultUnlocked} setIsVaultUnlocked={setIsVaultUnlocked} t={t} />}
         {activeTab === 'settings' && <SettingsTab lang={lang} setLang={setLang} accentColor={accentColor} setAccentColor={setAccentColor} t={t} />}

@@ -1,7 +1,7 @@
 import { formatBytes } from '../utils/formatters';
 
 export default function Sidebar({ activeTab, setActiveTab, t, savedCount, onOpenTokenModal, accentColor, totalUsedBytes }) {
-  const maxStorageBytes = 100 * 1024 * 1024 * 1024; // Лимит 100 GB
+  const maxStorageBytes = 100 * 1024 * 1024 * 1024;
   const usedPercentage = Math.min(100, Math.max(0.5, (totalUsedBytes / maxStorageBytes) * 100)).toFixed(1);
 
   return (
@@ -27,7 +27,6 @@ export default function Sidebar({ activeTab, setActiveTab, t, savedCount, onOpen
           {t.syncKey}
         </button>
         
-        {/* АВТОМАТИЧЕСКИЙ РАСЧЕТ ИСПОЛЬЗУЕМОЙ ПАМЯТИ */}
         <div className="glass-panel p-3" style={{ background: 'rgba(255,255,255,0.03)' }}>
           <div className="d-flex justify-content-between small subtext mb-2">
             <span>Занято: {formatBytes(totalUsedBytes)}</span>

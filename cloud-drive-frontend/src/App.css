@@ -15,7 +15,6 @@ body {
   margin: 0;
 }
 
-/* --- ГЛАВНАЯ СЕТКА И РАЗМЕТКА (Действует на всех экранах) --- */
 .app-container {
   width: 100vw;
   min-height: 100vh;
@@ -34,7 +33,6 @@ body {
   min-width: 0;
 }
 
-/* Полноэкранный оверлей для модальных окон */
 .modal-backdrop-custom {
   position: fixed;
   top: 0;
@@ -49,7 +47,6 @@ body {
   justify-content: center;
 }
 
-/* Заголовки и тексты */
 h1, h2, h3, h4, h5, h6 {
   color: #ffffff !important;
 }
@@ -58,7 +55,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #94a3b8 !important;
 }
 
-/* Панели */
 .glass-panel {
   background: var(--bg-card);
   border: 1px solid var(--bg-card-border);
@@ -207,7 +203,6 @@ th.col-actions, td.col-actions {
   background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0));
 }
 
-/* --- АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ И ПЛАНШЕТОВ --- */
 @media (max-width: 991.98px) {
   .app-container {
     flex-direction: column;

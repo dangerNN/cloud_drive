@@ -1,6 +1,3 @@
-/**
- * Преобразует байты в понятный формат (B, KB, MB, GB, TB)
- */
 export function formatBytes(bytes, decimals = 1) {
   if (!bytes || bytes === 0) return '0 B';
   const k = 1024;
